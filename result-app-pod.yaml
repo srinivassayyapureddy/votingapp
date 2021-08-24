@@ -1,0 +1,31 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: result-service
+  labels:
+    name: result-service
+    app: voting-app
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    name: result-app-pod
+    app: voting-app
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: result-app-pod
+  labels:
+    name: result-app-pod
+    app: voting-app
+spec:
+  containers:
+    - name: result-app
+      image: kodekloud/examplevotingapp_result:v1
+      ports:
+        - containerPort: 80
